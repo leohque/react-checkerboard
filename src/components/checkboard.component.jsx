@@ -5,9 +5,7 @@ export default class Checkerboard extends Component {
     super(props);
 
     this.state = {
-      size: 8,
-      p1color: 'red',
-      p2color: 'black'
+      size: 8
     }
   }
 
@@ -18,7 +16,7 @@ export default class Checkerboard extends Component {
   }
 
   changeP1color(e) {
-    const pieces = document.querySelectorAll('.red-piece');
+    const pieces = document.querySelectorAll('.p1-piece');
     pieces.forEach(piece => {
       piece.style.backgroundColor = e.target.value;
       piece.style.color = e.target.value;
@@ -26,7 +24,7 @@ export default class Checkerboard extends Component {
   }
 
   changeP2color(e) {
-    const pieces = document.querySelectorAll('.black-piece');
+    const pieces = document.querySelectorAll('.p2-piece');
     pieces.forEach(piece => {
       piece.style.backgroundColor = e.target.value;
       piece.style.color = e.target.value;
@@ -34,14 +32,14 @@ export default class Checkerboard extends Component {
   }
 
   changeP1shape(e) {
-    const pieces = document.querySelectorAll('.red-piece');
+    const pieces = document.querySelectorAll('.p1-piece');
     pieces.forEach(piece => {
       piece.style.borderRadius = e.target.value;
     })
   }
 
   changeP2shape(e) {
-    const pieces = document.querySelectorAll('.black-piece');
+    const pieces = document.querySelectorAll('.p2-piece');
     pieces.forEach(piece => {
       piece.style.borderRadius = e.target.value;
     })
@@ -66,7 +64,7 @@ export default class Checkerboard extends Component {
         for (let i2 = 0; i2 <= size; i2++) {
           if (i2 % 2 === 0) {
             if (i < 2 && bigEnough) {
-              thisBoard.innerHTML += "<div class='board-block bg-dark text-dark'><span class='red-piece piece'>x</span></div>"
+              thisBoard.innerHTML += "<div class='board-block bg-dark text-dark'><span class='p1-piece piece'>x</span></div>"
             } else if ((i > (size - 2)) && bigEnough) {
               thisBoard.innerHTML += "<div class='board-block bg-dark text-dark'><span class='black-piece piece'>x</span></div>"
             } else {
@@ -75,7 +73,7 @@ export default class Checkerboard extends Component {
           }
           if (i2 % 2 !== 0) {
             if (i < 2 && bigEnough) {
-              thisBoard.innerHTML += "<div class='board-block text-white'><span class='red-piece piece'>x</span></div>"
+              thisBoard.innerHTML += "<div class='board-block text-white'><span class='p1-piece piece'>x</span></div>"
             } else if ((i > (size - 2)) && bigEnough) {
               thisBoard.innerHTML += "<div class='board-block text-white'><span class='black-piece piece'>x</span></div>"
             } else {
@@ -88,7 +86,7 @@ export default class Checkerboard extends Component {
         for (let i3 = 0; i3 <= size; i3++) {
           if (i3 % 2 === 0) {
             if (i < 2 && bigEnough) {
-              thisBoard.innerHTML += "<div class='board-block text-white'><span class='red-piece piece'>x</span></div>"
+              thisBoard.innerHTML += "<div class='board-block text-white'><span class='p1-piece piece'>x</span></div>"
             } else if ((i > (size - 2)) & bigEnough) {
               thisBoard.innerHTML += "<div class='board-block text-white'><span class='black-piece piece'>x</span></div>"
             }
@@ -98,7 +96,7 @@ export default class Checkerboard extends Component {
           }
           if (i3 % 2 !== 0) {
             if (i < 2 && bigEnough) {
-              thisBoard.innerHTML += "<div class='board-block bg-dark text-dark'><span class='red-piece piece'>x</span></div>"
+              thisBoard.innerHTML += "<div class='board-block bg-dark text-dark'><span class='p1-piece piece'>x</span></div>"
             } else if ((i > (size - 2)) & bigEnough) {
               thisBoard.innerHTML += "<div class='board-block bg-dark text-dark'><span class='black-piece piece'>x</span></div>"
             }
@@ -143,24 +141,24 @@ export default class Checkerboard extends Component {
 
         <div id="board" className="w-100">
           <div className="board-row d-flex text-center">
-            <div className="board-block bg-dark text-dark"><span className="red-piece piece">X</span></div>
-            <div className="board-block text-white"><span className="red-piece piece">X</span></div>
-            <div className="board-block bg-dark text-dark"><span className="red-piece piece">X</span></div>
-            <div className="board-block text-white"><span className="red-piece piece">X</span></div>
-            <div className="board-block bg-dark text-dark"><span className="red-piece piece">X</span></div>
-            <div className="board-block text-white"><span className="red-piece piece">X</span></div>
-            <div className="board-block bg-dark text-dark"><span className="red-piece piece">X</span></div>
-            <div className="board-block text-white"><span className="red-piece piece">X</span></div>
+            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
+            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
+            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
+            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
+            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
+            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
+            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
+            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
           </div>
           <div className="board-row d-flex text-center">
-            <div className="board-block text-white"><span className="red-piece piece">X</span></div>
-            <div className="board-block bg-dark text-dark"><span className="red-piece piece">X</span></div>
-            <div className="board-block text-white"><span className="red-piece piece">X</span></div>
-            <div className="board-block bg-dark text-dark"><span className="red-piece piece">X</span></div>
-            <div className="board-block text-white"><span className="red-piece piece">X</span></div>
-            <div className="board-block bg-dark text-dark"><span className="red-piece piece">X</span></div>
-            <div className="board-block text-white"><span className="red-piece piece">X</span></div>
-            <div className="board-block bg-dark text-dark"><span className="red-piece piece">X</span></div>
+            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
+            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
+            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
+            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
+            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
+            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
+            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
+            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
           </div><div className="board-row d-flex text-center">
             <div className="board-block bg-dark text-dark">x</div>
             <div className="board-block text-white">x</div>
@@ -180,7 +178,8 @@ export default class Checkerboard extends Component {
             <div className="board-block bg-dark text-dark">x</div>
             <div className="board-block text-white">x</div>
             <div className="board-block bg-dark text-dark">x</div>
-          </div><div className="board-row d-flex text-center">
+          </div>
+          <div className="board-row d-flex text-center">
             <div className="board-block bg-dark text-dark">x</div>
             <div className="board-block text-white">x</div>
             <div className="board-block bg-dark text-dark">x</div>
@@ -199,25 +198,26 @@ export default class Checkerboard extends Component {
             <div className="board-block bg-dark text-dark">x</div>
             <div className="board-block text-white">x</div>
             <div className="board-block bg-dark text-dark">x</div>
-          </div><div className="board-row d-flex text-center">
-            <div className="board-block bg-dark text-dark"><span className="piece black-piece">x</span></div>
-            <div className="board-block text-white"><span className="piece black-piece">x</span></div>
-            <div className="board-block bg-dark text-dark"><span className="piece black-piece">x</span></div>
-            <div className="board-block text-white"><span className="piece black-piece">x</span></div>
-            <div className="board-block bg-dark text-dark"><span className="piece black-piece">x</span></div>
-            <div className="board-block text-white"><span className="piece black-piece">x</span></div>
-            <div className="board-block bg-dark text-dark"><span className="piece black-piece">x</span></div>
-            <div className="board-block text-white"><span className="piece black-piece">x</span></div>
           </div>
           <div className="board-row d-flex text-center">
-            <div className="board-block text-white"><span className="piece black-piece">x</span></div>
-            <div className="board-block bg-dark text-dark"><span className="piece black-piece">x</span></div>
-            <div className="board-block text-white"><span className="piece black-piece">x</span></div>
-            <div className="board-block bg-dark text-dark"><span className="piece black-piece">x</span></div>
-            <div className="board-block text-white"><span className="piece black-piece">x</span></div>
-            <div className="board-block bg-dark text-dark"><span className="piece black-piece">x</span></div>
-            <div className="board-block text-white"><span className="piece black-piece">x</span></div>
-            <div className="board-block bg-dark text-dark"><span className="piece black-piece">x</span></div>
+            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
+            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
+            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
+            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
+            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
+            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
+            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
+            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
+          </div>
+          <div className="board-row d-flex text-center">
+            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
+            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
+            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
+            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
+            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
+            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
+            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
+            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
           </div>
         </div>
       </div>
