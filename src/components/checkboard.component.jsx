@@ -5,15 +5,46 @@ export default class Checkerboard extends Component {
     super(props);
 
     this.state = {
-      size: 8
+      size: 8,
+      p1color: 'red',
+      p2color: 'black'
     }
   }
-
 
   onChangeValue(e) {
     this.setState({
       size: e.target.value
     });
+  }
+
+  changeP1color(e) {
+    const pieces = document.querySelectorAll('.red-piece');
+    pieces.forEach(piece => {
+      piece.style.backgroundColor = e.target.value;
+      piece.style.color = e.target.value;
+    })
+  }
+
+  changeP2color(e) {
+    const pieces = document.querySelectorAll('.black-piece');
+    pieces.forEach(piece => {
+      piece.style.backgroundColor = e.target.value;
+      piece.style.color = e.target.value;
+    })
+  }
+
+  changeP1shape(e) {
+    const pieces = document.querySelectorAll('.red-piece');
+    pieces.forEach(piece => {
+      piece.style.borderRadius = e.target.value;
+    })
+  }
+
+  changeP2shape(e) {
+    const pieces = document.querySelectorAll('.black-piece');
+    pieces.forEach(piece => {
+      piece.style.borderRadius = e.target.value;
+    })
   }
 
   onSubmit(e) {
@@ -86,6 +117,28 @@ export default class Checkerboard extends Component {
         Type a number and press enter to re-render this board
         <form onSubmit={this.onSubmit.bind(this)}>
           <input id="boardsize" onChange={this.onChangeValue.bind(this)} pattern="\d{1,5}" />
+          <div>
+            P1 Color:
+            Red <input type="radio" name="p1color" onClick={this.changeP1color} value="red" defaultChecked />&nbsp;
+            Green <input type="radio" name="p1color" onClick={this.changeP1color} value="green" />&nbsp;
+            Brown <input type="radio" name="p1color" onClick={this.changeP1color} value="brown" />
+          </div>
+          <div>
+            P1 Shape:
+            Circle <input type="radio" name="p1shape" onClick={this.changeP1shape} value="50%" defaultChecked />&nbsp;
+            Square <input type="radio" name="p1shape" onClick={this.changeP1shape} value="0" />
+          </div>
+          <div>
+            P2 Color:
+            Black <input type="radio" name="p2color" onClick={this.changeP2color} value="black" defaultChecked />&nbsp;
+            Purple <input type="radio" name="p2color" onClick={this.changeP2color} value="purple" />&nbsp;
+            Orange <input type="radio" name="p2color" onClick={this.changeP2color} value="orange" />
+          </div>
+          <div>
+            P2 Shape:
+            Circle <input type="radio" name="p2shape" onClick={this.changeP2shape} value="50%" defaultChecked />&nbsp;
+            Square <input type="radio" name="p2shape" onClick={this.changeP2shape} value="0" />
+          </div>
         </form>
 
         <div id="board" className="w-100">
