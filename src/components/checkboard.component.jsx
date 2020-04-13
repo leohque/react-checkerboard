@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Piece from './piece.component.jsx';
+
 export default class Checkerboard extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +15,79 @@ export default class Checkerboard extends Component {
     this.setState({
       size: e.target.value
     });
+  }
+
+  componentDidMount() {
+    this.renderBoard(this.state.size);
+  }
+
+  selectPiece(e) {
+    console.log(e);
+  }
+
+  renderBoard(size) {
+    const bigEnough = size >= 3;
+
+    const board = document.getElementById('board');
+    board.innerHTML = "";
+
+    for (let i = 0; i <= size; i++) {
+      board.innerHTML += `<div id='board-row-${i}' class='board-row d-flex text-center'>`;
+    }
+
+    for (let row = 0; row <= size; row++) {
+      const thisBoard = document.getElementById(`board-row-${row}`);
+      const p1piece = `<span class='p1-piece piece' onClick='${this.selectPiece}'>.</span>`;
+      const p2piece = `<span class='p2-piece piece' onClick='${this.selectPiece}'>.</span>`;
+
+      if (row % 2 === 0) {
+        for (let col = 0; col <= size; col++) {
+          if (col % 2 === 0) {
+            if (row < 2 && bigEnough) {
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block bg-dark text-dark'>${p1piece}</div>`
+            } else if ((row > (size - 2)) && bigEnough) {
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block bg-dark text-dark'>${p2piece}</div>`
+            } else {
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block bg-dark text-dark'>.</div>`
+            }
+          }
+          if (col % 2 !== 0) {
+            if (row < 2 && bigEnough) {
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block text-white'>${p1piece}</div>`
+            } else if ((row > (size - 2)) && bigEnough) {
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block text-white'>${p2piece}</div>`
+            } else {
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block text-white'>.</div>`
+            }
+          }
+        }
+      }
+      if (row % 2 !== 0) {
+        for (let col = 0; col <= size; col++) {
+          if (col % 2 === 0) {
+            if (row < 2 && bigEnough) {
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block text-white'>${p1piece}</div>`
+            } else if ((row > (size - 2)) & bigEnough) {
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block text-white'>${p2piece}</div>`
+            }
+            else {
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block text-white'>.</div>`
+            }
+          }
+          if (col % 2 !== 0) {
+            if (row < 2 && bigEnough) {
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block bg-dark text-dark'>${p1piece}</div>`
+            } else if ((row > (size - 2)) & bigEnough) {
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block bg-dark text-dark'>${p2piece}</div>`
+            }
+            else {
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block bg-dark text-dark'>.</div>`
+            }
+          }
+        }
+      }
+
+    } // end big for
   }
 
   changeP1color(e) {
@@ -47,74 +122,15 @@ export default class Checkerboard extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-
-    const board = document.getElementById('board');
-    const size = this.state.size;
-    const bigEnough = this.state.size >= 3;
-    board.innerHTML = "";
-
-
-    for (let i = 0; i <= size; i++) {
-      board.innerHTML += `<div id='board-row-${i}' class='board-row d-flex text-center'>`;
-    }
-
-    for (let i = 0; i <= size; i++) {
-      const thisBoard = document.getElementById(`board-row-${i}`);
-      if (i % 2 === 0) {
-        for (let i2 = 0; i2 <= size; i2++) {
-          if (i2 % 2 === 0) {
-            if (i < 2 && bigEnough) {
-              thisBoard.innerHTML += "<div class='board-block bg-dark text-dark'><span class='p1-piece piece'>x</span></div>"
-            } else if ((i > (size - 2)) && bigEnough) {
-              thisBoard.innerHTML += "<div class='board-block bg-dark text-dark'><span class='black-piece piece'>x</span></div>"
-            } else {
-              thisBoard.innerHTML += "<div class='board-block bg-dark text-dark'>x</div>"
-            }
-          }
-          if (i2 % 2 !== 0) {
-            if (i < 2 && bigEnough) {
-              thisBoard.innerHTML += "<div class='board-block text-white'><span class='p1-piece piece'>x</span></div>"
-            } else if ((i > (size - 2)) && bigEnough) {
-              thisBoard.innerHTML += "<div class='board-block text-white'><span class='black-piece piece'>x</span></div>"
-            } else {
-              thisBoard.innerHTML += "<div class='board-block text-white'>x</div>"
-            }
-          }
-        }
-      }
-      if (i % 2 !== 0) {
-        for (let i3 = 0; i3 <= size; i3++) {
-          if (i3 % 2 === 0) {
-            if (i < 2 && bigEnough) {
-              thisBoard.innerHTML += "<div class='board-block text-white'><span class='p1-piece piece'>x</span></div>"
-            } else if ((i > (size - 2)) & bigEnough) {
-              thisBoard.innerHTML += "<div class='board-block text-white'><span class='black-piece piece'>x</span></div>"
-            }
-            else {
-              thisBoard.innerHTML += "<div class='board-block text-white'>x</div>"
-            }
-          }
-          if (i3 % 2 !== 0) {
-            if (i < 2 && bigEnough) {
-              thisBoard.innerHTML += "<div class='board-block bg-dark text-dark'><span class='p1-piece piece'>x</span></div>"
-            } else if ((i > (size - 2)) & bigEnough) {
-              thisBoard.innerHTML += "<div class='board-block bg-dark text-dark'><span class='black-piece piece'>x</span></div>"
-            }
-            else {
-              thisBoard.innerHTML += "<div class='board-block bg-dark text-dark'>x</div>"
-            }
-          }
-        }
-      }
-    }
+    this.renderBoard(this.state.size);
   }
 
   render() {
     return(
-      <div>
-        Type a number and press enter to re-render this board
+      <div className="d-flex justify-content-center flex-column">
         <form onSubmit={this.onSubmit.bind(this)}>
-          <input id="boardsize" onChange={this.onChangeValue.bind(this)} pattern="\d{1,5}" />
+          <input id="boardsize" onChange={this.onChangeValue.bind(this)} pattern="\d{1,5}" placeholder={this.state.size} />
+          <button>Refresh</button>
           <div>
             P1 Color:
             Red <input type="radio" name="p1color" onClick={this.changeP1color} value="red" defaultChecked />&nbsp;
@@ -140,85 +156,6 @@ export default class Checkerboard extends Component {
         </form>
 
         <div id="board" className="w-100">
-          <div className="board-row d-flex text-center">
-            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
-            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
-            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
-            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
-            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
-            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
-            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
-            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
-          </div>
-          <div className="board-row d-flex text-center">
-            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
-            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
-            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
-            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
-            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
-            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
-            <div className="board-block text-white"><span className="p1-piece piece">X</span></div>
-            <div className="board-block bg-dark text-dark"><span className="p1-piece piece">X</span></div>
-          </div><div className="board-row d-flex text-center">
-            <div className="board-block bg-dark text-dark">x</div>
-            <div className="board-block text-white">x</div>
-            <div className="board-block bg-dark text-dark">x</div>
-            <div className="board-block text-white">x</div>
-            <div className="board-block bg-dark text-dark">x</div>
-            <div className="board-block text-white">x</div>
-            <div className="board-block bg-dark text-dark">x</div>
-            <div className="board-block text-white">x</div>
-          </div>
-          <div className="board-row d-flex text-center">
-            <div className="board-block text-white">x</div>
-            <div className="board-block bg-dark text-dark">x</div>
-            <div className="board-block text-white">x</div>
-            <div className="board-block bg-dark text-dark">x</div>
-            <div className="board-block text-white">x</div>
-            <div className="board-block bg-dark text-dark">x</div>
-            <div className="board-block text-white">x</div>
-            <div className="board-block bg-dark text-dark">x</div>
-          </div>
-          <div className="board-row d-flex text-center">
-            <div className="board-block bg-dark text-dark">x</div>
-            <div className="board-block text-white">x</div>
-            <div className="board-block bg-dark text-dark">x</div>
-            <div className="board-block text-white">x</div>
-            <div className="board-block bg-dark text-dark">x</div>
-            <div className="board-block text-white">x</div>
-            <div className="board-block bg-dark text-dark">x</div>
-            <div className="board-block text-white">x</div>
-          </div>
-          <div className="board-row d-flex text-center">
-            <div className="board-block text-white">x</div>
-            <div className="board-block bg-dark text-dark">x</div>
-            <div className="board-block text-white">x</div>
-            <div className="board-block bg-dark text-dark">x</div>
-            <div className="board-block text-white">x</div>
-            <div className="board-block bg-dark text-dark">x</div>
-            <div className="board-block text-white">x</div>
-            <div className="board-block bg-dark text-dark">x</div>
-          </div>
-          <div className="board-row d-flex text-center">
-            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
-            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
-            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
-            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
-            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
-            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
-            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
-            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
-          </div>
-          <div className="board-row d-flex text-center">
-            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
-            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
-            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
-            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
-            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
-            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
-            <div className="board-block text-white"><span className="piece p2-piece">x</span></div>
-            <div className="board-block bg-dark text-dark"><span className="piece p2-piece">x</span></div>
-          </div>
         </div>
       </div>
     );
