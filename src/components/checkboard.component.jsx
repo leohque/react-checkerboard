@@ -9,9 +9,13 @@ export default class Checkerboard extends Component {
     }
   }
 
+
   componentWillMount() {
     // console.log('component will mount');
+    //renderBoard(8);
   }
+
+
 
   onChangeValue(e) {
     this.setState({
@@ -24,7 +28,39 @@ export default class Checkerboard extends Component {
 
     console.log(this.state);
 
-    document.getElementById('boardsize').value = '';
+    const board = document.getElementById('board');
+    const size = this.state.size;
+
+    board.innerHTML = "";
+
+    for (let i = 0; i <= size; i++) {
+      board.innerHTML += `<div id='board-row-${i}' class='board-row d-flex text-center'>`;
+    }
+
+    for (let i = 0; i <= size; i++) {
+      const thisBoard = document.getElementById(`board-row-${i}`);
+      console.log(thisBoard);
+      if (i % 2 === 0) {
+        for (let i2 = 0; i2 <= size; i2++) {
+          if (i2 % 2 === 0) {
+            thisBoard.innerHTML += "<div class='board-block w-25 bg-dark text-dark'>x</div>"
+          }
+          if (i2 % 2 !== 0) {
+            thisBoard.innerHTML += "<div class='board-block w-25 text-white'>x</div>"
+          }
+        }
+      }
+      if (i % 2 !== 0) {
+        for (let i3 = 0; i3 <= size; i3++) {
+          if (i3 % 2 === 0) {
+            thisBoard.innerHTML += "<div class='board-block w-25 text-white'>x</div>"
+          }
+          if (i3 % 2 !== 0) {
+            thisBoard.innerHTML += "<div class='board-block w-25 bg-dark text-dark'>x</div>"
+          }
+        }
+      }
+    }
   }
 
   render() {
@@ -35,8 +71,28 @@ export default class Checkerboard extends Component {
           <input id="boardsize" onChange={this.onChangeValue.bind(this)} pattern="\d{1,5}" />
         </form>
 
-        <div className="checkerboard">
-
+        <div id="board" className="w-100">
+          {this.state.size}
+          <div className="board-row d-flex text-center">
+            <div className="board-block w-25 bg-dark text-dark">x</div>
+            <div className="board-block w-25 text-white">x</div>
+            <div className="board-block w-25 bg-dark text-dark">x</div>
+            <div className="board-block w-25 text-white">x</div>
+            <div className="board-block w-25 bg-dark text-dark">x</div>
+            <div className="board-block w-25 text-white">x</div>
+            <div className="board-block w-25 bg-dark text-dark">x</div>
+            <div className="board-block w-25 text-white">x</div>
+          </div>
+          <div className="board-row d-flex text-center">
+            <div className="board-block w-25 text-white">x</div>
+            <div className="board-block w-25 bg-dark text-dark">x</div>
+            <div className="board-block w-25 text-white">x</div>
+            <div className="board-block w-25 bg-dark text-dark">x</div>
+            <div className="board-block w-25 text-white">x</div>
+            <div className="board-block w-25 bg-dark text-dark">x</div>
+            <div className="board-block w-25 text-white">x</div>
+            <div className="board-block w-25 bg-dark text-dark">x</div>
+          </div>
         </div>
       </div>
     );
