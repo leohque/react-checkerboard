@@ -10,11 +10,6 @@ export default class Checkerboard extends Component {
   }
 
 
-  componentWillMount() {
-  }
-
-
-
   onChangeValue(e) {
     this.setState({
       size: e.target.value
