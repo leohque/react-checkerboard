@@ -142,7 +142,7 @@ export default class Checkerboard extends Component {
           }
         }
       }
-    } // end big for
+    }
     this.setUpPieces();
   }
 
