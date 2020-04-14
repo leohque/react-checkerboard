@@ -5,7 +5,8 @@ export default class Checkerboard extends Component {
     super(props);
 
     this.state = {
-      size: 8
+      size: 8,
+      lastMove: ''
     }
   }
 
@@ -27,26 +28,29 @@ export default class Checkerboard extends Component {
   }
 
   suggestMoves(playerPiece, move1, move2, block) {
-    console.log('suggestmoves called');
-    if (move1 && (move1.innerText !== 'x')) {
-      move1.classList.toggle('suggested');
-      move1.addEventListener('click', () => {
-        block.innerHTML = '.';
-        move1.innerHTML = playerPiece;
-        move1.classList.remove('suggested');
-        if (move2) { move2.classList.remove('suggested'); }
-      });
-     }
-    if (move2 && (move2.innerText !== 'x')) {
-      move2.classList.toggle('suggested');
-      move2.addEventListener('click', () => {
-        block.innerHTML = '.';
-        move2.innerHTML = playerPiece;
-        move2.innerHTML = playerPiece;
-        move2.classList.remove('suggested');
-        if (move1) { move1.classList.remove('suggested'); }
-      });
-     }
+    if (block !== this.state.lastMove) {
+      if (move1 && (move1.innerText !== 'x')) {
+        move1.classList.toggle('suggested');
+        move1.addEventListener('click', () => {
+          this.setState({ lastMove: move1 });
+          block.innerHTML = '.';
+          move1.innerHTML = playerPiece;
+          move1.classList.remove('suggested');
+          if (move2) { move2.classList.remove('suggested'); }
+        });
+       }
+      if (move2 && (move2.innerText !== 'x')) {
+        move2.classList.toggle('suggested');
+        move2.addEventListener('click', () => {
+          this.setState({ lastMove: move2 });
+          block.innerHTML = '.';
+          move2.innerHTML = playerPiece;
+          move2.innerHTML = playerPiece;
+          move2.classList.remove('suggested');
+          if (move1) { move1.classList.remove('suggested'); }
+        });
+      }
+    }
   }
 
   selectPiece(e) {
