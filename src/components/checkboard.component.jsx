@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 
-import Piece from './piece.component.jsx';
-
 export default class Checkerboard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      size: 8
+      size: 8,
+      selectedPiece: false
     }
   }
 
@@ -21,8 +20,37 @@ export default class Checkerboard extends Component {
     this.renderBoard(this.state.size);
   }
 
+  setUpPieces() {
+    const pieces = document.querySelectorAll('.board-block');
+    pieces.forEach(piece => {
+      piece.addEventListener('click', this.selectPiece);
+    })
+  }
+
   selectPiece(e) {
-    console.log(e);
+    const block = e.currentTarget;
+    const positionX = parseInt(e.currentTarget.dataset.col, 10);
+    const positionY = parseInt(e.currentTarget.dataset.row, 10);
+    const jumpRightX = positionX - 1;
+    const jumpLeftX = positionX + 1;
+
+    const piece = e.currentTarget.querySelector('.piece');
+    console.log(`x: ${positionX}`);
+    console.log(`y: ${positionY}`);
+    console.log(`jumpRightX: ${jumpRightX}`);
+    console.log(`jumpLeftX: ${jumpLeftX}`);
+    console.log(piece);
+    if (piece) {
+      piece.classList.toggle('selected');
+      const p1piece = piece.classList.contains('p1-piece');
+      if (p1piece) {
+        const shiftY = positionY + 1;
+        console.log(`can move to ${jumpRightX}, ${shiftY} & ${jumpLeftX}, ${shiftY}`);
+      } else {
+        const shiftY = positionY - 1;
+      }
+    }
+
   }
 
   renderBoard(size) {
@@ -37,8 +65,8 @@ export default class Checkerboard extends Component {
 
     for (let row = 0; row <= size; row++) {
       const thisBoard = document.getElementById(`board-row-${row}`);
-      const p1piece = `<span class='p1-piece piece' onClick='${this.selectPiece}'>.</span>`;
-      const p2piece = `<span class='p2-piece piece' onClick='${this.selectPiece}'>.</span>`;
+      const p1piece = `<span class='p1-piece piece'>.</span>`;
+      const p2piece = `<span class='p2-piece piece'>.</span>`;
 
       if (row % 2 === 0) {
         for (let col = 0; col <= size; col++) {
@@ -86,8 +114,8 @@ export default class Checkerboard extends Component {
           }
         }
       }
-
     } // end big for
+    this.setUpPieces();
   }
 
   changeP1color(e) {
