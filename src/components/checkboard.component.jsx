@@ -23,34 +23,59 @@ export default class Checkerboard extends Component {
   setUpPieces() {
     const pieces = document.querySelectorAll('.board-block');
     pieces.forEach(piece => {
-      piece.addEventListener('click', this.selectPiece);
+      piece.addEventListener('click', this.selectPiece.bind(this));
     })
+  }
+
+  suggestMoves(playerPiece, move1, move2, block) {
+    console.log('suggestmoves called');
+    if (move1 && (move1.innerText !== 'x')) {
+      move1.classList.toggle('suggested');
+      move1.addEventListener('click', () => {
+        block.innerHTML = '.';
+        move1.innerHTML = playerPiece;
+        move1.classList.remove('suggested');
+        if (move2) { move2.classList.remove('suggested'); }
+      });
+     }
+    if (move2 && (move2.innerText !== 'x')) {
+      move2.classList.toggle('suggested');
+      move2.addEventListener('click', () => {
+        block.innerHTML = '.';
+        move2.innerHTML = playerPiece;
+        move2.innerHTML = playerPiece;
+        move2.classList.remove('suggested');
+        if (move1) { move1.classList.remove('suggested'); }
+      });
+     }
   }
 
   selectPiece(e) {
     const block = e.currentTarget;
-    const positionX = parseInt(e.currentTarget.dataset.col, 10);
-    const positionY = parseInt(e.currentTarget.dataset.row, 10);
+    const piece = e.currentTarget.querySelector('.piece');
+
+    const positionX = parseInt(block.dataset.col, 10);
+    const positionY = parseInt(block.dataset.row, 10);
     const jumpRightX = positionX - 1;
     const jumpLeftX = positionX + 1;
+    const p1piece = `<span class='p1-piece piece'>x</span>`;
+    const p2piece = `<span class='p2-piece piece'>x</span>`;
 
-    const piece = e.currentTarget.querySelector('.piece');
-    console.log(`x: ${positionX}`);
-    console.log(`y: ${positionY}`);
-    console.log(`jumpRightX: ${jumpRightX}`);
-    console.log(`jumpLeftX: ${jumpLeftX}`);
-    console.log(piece);
     if (piece) {
       piece.classList.toggle('selected');
-      const p1piece = piece.classList.contains('p1-piece');
-      if (p1piece) {
+      const p1 = piece.classList.contains('p1-piece');
+      if (p1) {
         const shiftY = positionY + 1;
-        console.log(`can move to ${jumpRightX}, ${shiftY} & ${jumpLeftX}, ${shiftY}`);
+        const move1 = document.querySelector(`[data-col='${jumpRightX}'][data-row='${shiftY}']`);
+        const move2 = document.querySelector(`[data-col='${jumpLeftX}'][data-row='${shiftY}']`);
+        this.suggestMoves(p1piece, move1, move2, block, this);
       } else {
         const shiftY = positionY - 1;
+        const move1 = document.querySelector(`[data-col='${jumpRightX}'][data-row='${shiftY}']`);
+        const move2 = document.querySelector(`[data-col='${jumpLeftX}'][data-row='${shiftY}']`);
+        this.suggestMoves(p2piece, move1, move2, block, this);
       }
     }
-
   }
 
   renderBoard(size) {
@@ -65,27 +90,27 @@ export default class Checkerboard extends Component {
 
     for (let row = 0; row <= size; row++) {
       const thisBoard = document.getElementById(`board-row-${row}`);
-      const p1piece = `<span class='p1-piece piece'>.</span>`;
-      const p2piece = `<span class='p2-piece piece'>.</span>`;
+      const p1piece = `<span class='p1-piece piece'>x</span>`;
+      const p2piece = `<span class='p2-piece piece'>x</span>`;
 
       if (row % 2 === 0) {
         for (let col = 0; col <= size; col++) {
           if (col % 2 === 0) {
             if (row < 2 && bigEnough) {
-              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block bg-dark text-dark'>${p1piece}</div>`
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block black-block'>${p1piece}</div>`
             } else if ((row > (size - 2)) && bigEnough) {
-              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block bg-dark text-dark'>${p2piece}</div>`
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block black-block'>${p2piece}</div>`
             } else {
-              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block bg-dark text-dark'>.</div>`
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block black-block'>.</div>`
             }
           }
           if (col % 2 !== 0) {
             if (row < 2 && bigEnough) {
-              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block text-white'>${p1piece}</div>`
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block white-block'>${p1piece}</div>`
             } else if ((row > (size - 2)) && bigEnough) {
-              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block text-white'>${p2piece}</div>`
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block white-block'>${p2piece}</div>`
             } else {
-              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block text-white'>.</div>`
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block white-block'>.</div>`
             }
           }
         }
@@ -94,22 +119,22 @@ export default class Checkerboard extends Component {
         for (let col = 0; col <= size; col++) {
           if (col % 2 === 0) {
             if (row < 2 && bigEnough) {
-              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block text-white'>${p1piece}</div>`
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block white-block'>${p1piece}</div>`
             } else if ((row > (size - 2)) & bigEnough) {
-              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block text-white'>${p2piece}</div>`
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block white-block'>${p2piece}</div>`
             }
             else {
-              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block text-white'>.</div>`
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block white-block'>.</div>`
             }
           }
           if (col % 2 !== 0) {
             if (row < 2 && bigEnough) {
-              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block bg-dark text-dark'>${p1piece}</div>`
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block black-block'>${p1piece}</div>`
             } else if ((row > (size - 2)) & bigEnough) {
-              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block bg-dark text-dark'>${p2piece}</div>`
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block black-block'>${p2piece}</div>`
             }
             else {
-              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block bg-dark text-dark'>.</div>`
+              thisBoard.innerHTML += `<div data-row='${row}' data-col='${col}' class='board-block black-block'>.</div>`
             }
           }
         }

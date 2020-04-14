@@ -6,6 +6,16 @@
   justify-content:center;
 }
 
+.black-block {
+  background-color:#424242;
+  color:#424242;
+}
+
+.white-block {
+  background-color:white;
+  color:white;
+}
+
 .piece {
   display:block;
   width:90%;
@@ -25,4 +35,9 @@
 
 .selected {
   border: 3px solid #faed27;
+}
+
+.suggested {
+  background-color:#29eef4;
+  color:#20eef4;
 }
