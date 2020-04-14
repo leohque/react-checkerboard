@@ -5,8 +5,7 @@ export default class Checkerboard extends Component {
     super(props);
 
     this.state = {
-      size: 8,
-      selectedPiece: false
+      size: 8
     }
   }
 
